@@ -350,13 +350,34 @@ body.dark .comfort-button:hover{
 }
 
 .stat-num{
-  display:block;
+  display:inline-block;  /* Changed from block */
   font-family:"Playfair Display", serif;
   font-weight:300;
   font-size:clamp(4rem, 12vw, 18rem);
   line-height:0.9;
   letter-spacing:-0.02em;
-  margin-bottom:12px;  /* Space for captions */
+}
+
+.stat-suffix{
+  display:inline-block;
+  font-family:Playfair-display, serif;
+  font-size:clamp(3rem, 2.4vw, 3rem);  /* Much bigger */
+  letter-spacing:0.005em;
+  text-transform:uppercase;
+  opacity:0.7;  /* Exact same opacity as caption */
+  vertical-align: bottom;
+  margin-left:0.4em;  /* More spacing for bigger size */
+  font-weight:400;  /* No bold */
+}
+
+.stat-label{
+  display:block;
+  font-family:Arial, sans-serif;
+  font-size:clamp(0.75rem, 1.1vw, 1.2rem);
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  opacity:0.7;
+  margin-top:12px;  /* Space after number+suffix */
 }
 
 .stat-label{
@@ -463,31 +484,31 @@ body.dark .comfort-button:hover{
 
   <section class="section stats-screen fade-appear" id="stats">
   <div class="stats-container">
-    <!-- Top-right: Papers Sold + Clients Served side-by-side -->
     <div class="stat-row top-right">
       <div class="stat-item top-right-left">
-        <span class="stat-num" data-target="500" data-suffix="+">0</span>
+        <span class="stat-num" data-target="500">0</span><span class="stat-suffix">+</span>
         <span class="stat-label">Papers Sold</span>
       </div>
       <div class="stat-item top-right-right">
-        <span class="stat-num" data-target="42" data-suffix="K">0</span>
+        <span class="stat-num" data-target="42">0</span><span class="stat-suffix">K</span>
         <span class="stat-label">Clients Served</span>
       </div>
     </div>
 
-    <!-- Middle-left: 17 Years Experience -->
     <div class="stat-item middle-left">
       <span class="stat-num" data-target="17">0</span>
       <span class="stat-label">Years Experience</span>
     </div>
 
-    <!-- Middle-center: 250K Revenue -->
     <div class="stat-item middle-center">
-      <span class="stat-num" data-target="250" data-suffix="K">0</span>
+      <span class="stat-num" data-target="250">0</span><span class="stat-suffix">K</span>
       <span class="stat-label">Revenue Generated</span>
     </div>
 
-    <!-- Bottom-right: 50+ Projects Delivered -->
+    <div class="stat-item bottom-right">
+      <span class="stat-num" data-target="50">0</span><span class="stat-suffix">+</span>
+      <span class="stat-label">Projects Delivered</span>
+    </div>
   </div>
 </section>
 
