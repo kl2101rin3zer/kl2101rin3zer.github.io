@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Name</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&family=Playfair+Display:wght@300;400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
   <style>
     @font-face{font-family:Clarkson;src:url("./fonts/clarkson-400.woff2") format("woff2");font-weight:400}
     @font-face{font-family:Clarkson;src:url("./fonts/clarkson-500.woff2") format("woff2");font-weight:500}
@@ -24,7 +22,6 @@ html,body{height:100%;margin:0;padding:0;overflow-x:hidden;scroll-snap-type:y ma
     .theme-toggle{position:fixed;bottom:20px;right:20px;background:none;border:0;cursor:pointer;font-size:32px;color:inherit;z-index:999}
     .hero-bg{background:url("london.jpg") center/cover no-repeat;filter:saturate(45%) brightness(82%);position:relative;overflow:hidden}
     .hero-bg::before{content:"";position:absolute;inset:0;background:inherit;background-size:cover;background-position:center;transform:translateY(var(--hero-offset));transition:transform .1s linear;filter:inherit;z-index:-1}
-
     .hero-content{
       position:absolute;
       left:5%;
@@ -35,7 +32,6 @@ html,body{height:100%;margin:0;padding:0;overflow-x:hidden;scroll-snap-type:y ma
       align-items:flex-end;
       gap:24px;
     }
-
     .hero-title{
       position:static;
       margin:0;
@@ -51,7 +47,6 @@ html,body{height:100%;margin:0;padding:0;overflow-x:hidden;scroll-snap-type:y ma
       transform:translateY(4px);
       transition:opacity 1.2s ease, transform 1.2s ease;
     }
-
     .hero-subblock{
       position:static;
       max-width:28%;
@@ -61,21 +56,17 @@ html,body{height:100%;margin:0;padding:0;overflow-x:hidden;scroll-snap-type:y ma
       transform:translateY(-12px);
       transition:opacity 1.6s ease, transform 1.6s ease;
     }
-
-
     .hero-title.visible,
     .hero-subblock.visible{
       opacity:1;
       transform:translateY(0);
     }
-
     .comfort-section{
   position:relative;
   background:var(--bg);
   overflow:hidden;
   padding:8vh 0;  /* Top/bottom margins */
 }
-
 .comfort-image-wrap{
   position:absolute;
   inset:8vh 0 8vh 0;  /* Respect top/bottom margins */
@@ -84,7 +75,6 @@ html,body{height:100%;margin:0;padding:0;overflow-x:hidden;scroll-snap-type:y ma
   align-items:center;
   pointer-events:none;
 }
-
 .comfort-image{
   max-width:min(55vw, 680px);
   max-height:75vh;
@@ -99,12 +89,9 @@ html,body{height:100%;margin:0;padding:0;overflow-x:hidden;scroll-snap-type:y ma
   left:50%;
   transform:translateX(-50%);
 }
-
 .comfort-section.visible .comfort-image{
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);  /* Full rectangle */
 }
-
-
 .comfort-text{
   position:absolute;
   left:5%;
@@ -112,13 +99,11 @@ html,body{height:100%;margin:0;padding:0;overflow-x:hidden;scroll-snap-type:y ma
   width:min(22vw, 320px);
   color:inherit;
 }
-
 .comfort-line {
   opacity: 0;
   transform: translateY(40px);  /* Hidden below "wall" */
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-
 .comfort-section.visible .comfort-line:nth-child(1) { 
   transition-delay: 0.2s; 
 }
@@ -134,13 +119,10 @@ html,body{height:100%;margin:0;padding:0;overflow-x:hidden;scroll-snap-type:y ma
 .comfort-section.visible .comfort-line:nth-child(5) { 
   transition-delay: 1.0s; 
 }
-
 .comfort-section.visible .comfort-line {
   opacity: 1;
   transform: translateY(0);  /* Slide up from behind wall */
 }
-
-
 .comfort-copy{
   position:absolute;
   top:12%;  /* Adjusted for margin */
@@ -155,17 +137,13 @@ html,body{height:100%;margin:0;padding:0;overflow-x:hidden;scroll-snap-type:y ma
   transform:translateY(18px);
   transition:opacity 1s ease, transform 1s ease;
 }
-
 body.dark .comfort-copy{
   color:#fff;
 }
-
 .comfort-section.visible .comfort-copy{
   opacity:1;
   transform:translateY(0);
 }
-
-
 .comfort-line{
   font-family:"Playfair Display", serif;
   font-size:clamp(2.2rem, 3.8vw, 4.5rem);  /* Much bigger */
@@ -174,16 +152,12 @@ body.dark .comfort-copy{
   text-transform:uppercase;
   font-weight:300;
 }
-
 .comfort-line.italic{
   font-style:italic;
 }
-
-
 .comfort-line.italic{
   font-style:italic;
 }
-
 .comfort-copy{
   position:absolute;
   top:2%;
@@ -198,16 +172,13 @@ body.dark .comfort-copy{
   transform:translateY(18px);
   transition:opacity 1s ease, transform 1s ease;
 }
-
 body.dark .comfort-copy{
   color:#fff;
 }
-
 .comfort-section.visible .comfort-copy{
   opacity:1;
   transform:translateY(0);
 }
-
 .comfort-button{
   margin-top:18px;
   padding:12px 28px;
@@ -222,7 +193,6 @@ body.dark .comfort-copy{
   transition:all .3s ease;
   width:fit-content;
 }
-
 .comfort-button{
   margin-top:14px;
   padding:8px 20px;
@@ -237,30 +207,23 @@ body.dark .comfort-copy{
   transition:all .3s ease;
   width:fit-content;
 }
-
 /* Light mode: Black button, white text */
 .comfort-button{
   background:#000;
   color:#fff;
 }
-
 /* Dark mode: White button, black text */
 body.dark .comfort-button{
   background:#fff;
   color:#000;
 }
-
 .comfort-button:hover{
   transform:translateY(-1px);
   box-shadow:0 4px 16px rgba(0,0,0,.2);
 }
-
 body.dark .comfort-button:hover{
   box-shadow:0 4px 16px rgba(255,255,255,.15);
 }
-
-
-
     .hero-subtitle span{
       display:block;
       font-family:"Playfair Display",serif;
@@ -271,7 +234,6 @@ body.dark .comfort-button:hover{
       color:#fff;
       text-shadow:0 3px 12px rgba(0,0,0,.35)
     }
-
     .hero-subtext{
       font-family:Arial,sans-serif;
       font-size:1.05vw;
@@ -280,7 +242,6 @@ body.dark .comfort-button:hover{
       margin-top:14px;
       max-width:22vw
     }
-
     .scroll-indicator{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-size:1rem;color:#fff;opacity:.8;animation:bounce 1.6s infinite ease-in-out;text-shadow:0 2px 10px rgba(0,0,0,.4)}
     @keyframes bounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
     .content{text-align:center}
@@ -311,13 +272,11 @@ body.dark .comfort-button:hover{
       .hero-content{left:5%;right:5%;flex-direction:column;align-items:flex-start}
       .hero-subblock{max-width:none}
     }
-
    .stats-screen{
   background:#000;
   color:#fff;
   position:relative;
 }
-
 .stats-container{
   position:absolute;
   inset:0;
@@ -329,7 +288,6 @@ body.dark .comfort-button:hover{
   padding:0;
   box-sizing:border-box;
 }
-
 .stat-row {
   display: flex;
   gap: 6vw;
@@ -337,18 +295,15 @@ body.dark .comfort-button:hover{
   justify-content: flex-end;
   width: 100%;
 }
-
 .stat-item{
   opacity:0;
   transform:translateY(30px);
   transition:opacity 1s ease, transform 1s ease;
 }
-
 .stats-screen.visible .stat-item{
   opacity:1;
   transform:translateY(0);
 }
-
 .stat-num{
   display:inline-block;  /* Changed from block */
   font-family:"Playfair Display", serif;
@@ -357,7 +312,6 @@ body.dark .comfort-button:hover{
   line-height:0.9;
   letter-spacing:-0.02em;
 }
-
 .stat-suffix{
   display:inline-block;
   font-family:Playfair-display, serif;
@@ -369,7 +323,6 @@ body.dark .comfort-button:hover{
   margin-left:0.4em;  /* More spacing for bigger size */
   font-weight:400;  /* No bold */
 }
-
 .stat-label{
   display:block;
   font-family:Arial, sans-serif;
@@ -379,7 +332,6 @@ body.dark .comfort-button:hover{
   opacity:0.7;
   margin-top:12px;  /* Space after number+suffix */
 }
-
 .stat-label{
   display:block;
   font-family:Arial, sans-serif;
@@ -388,39 +340,31 @@ body.dark .comfort-button:hover{
   text-transform:uppercase;
   opacity:0.7;
 }
-
 .top-right{ align-self: flex-end; }
 .top-right-left{ flex-shrink: 0; }
 .top-right-right{ flex-shrink: 0; }
-
 .middle-left{ 
   align-self: flex-start; 
   margin-left: 5vw;
   margin-top: 8vh;
 }
-
 .middle-center{ 
   align-self: center; 
   margin-top: 10px;    /* Just 10px down from center */
 }
-
-
 .bottom-middle{ 
   align-self: flex-start; 
   margin-left: 25vw;
   margin-bottom: 8vh;
 }
-
 .bottom-right { 
   align-self: flex-end; 
   margin-right: 5vw;
   margin-bottom: 8vh;
 }
-
   </style>
 </head>
 <body>
-
   <nav class="nav">
     <div class="nav-inner">
       <span class="nav-logo">Name</span>
@@ -431,11 +375,9 @@ body.dark .comfort-button:hover{
       </div>
     </div>
   </nav>
-
   <button class="theme-toggle" id="themeToggle">
     <span class="material-icons" id="themeIcon">dark_mode</span>
   </button>
-
   <section class="section hero-bg fade-appear" id="hero">
     <div class="hero-content">
       <h1 class="hero-title" id="heroTitle">HELLO</h1>
@@ -451,9 +393,7 @@ body.dark .comfort-button:hover{
     </div>
     <div class="scroll-indicator">scroll ↓</div>
   </section>
-  
   <section class="section comfort-section fade-appear" id="comfort">
-    
   <div class="comfort-image-wrap">
     <img src="comfort.png" alt="Comfort" class="comfort-image">
     <div class="comfort-copy">
@@ -469,10 +409,7 @@ body.dark .comfort-button:hover{
   </p>
   <button class="comfort-button">LEARN MORE</button>
 </div>
-
   </div>
-  
-
   <div class="comfort-text">
     <div class="comfort-line italic">TIMELESS</div>
     <div class="comfort-line">DESIGN.</div>
@@ -481,37 +418,33 @@ body.dark .comfort-button:hover{
     <div class="comfort-line">LIVING</div>
   </div>
 </section>
-
   <section class="section stats-screen fade-appear" id="stats">
   <div class="stats-container">
     <div class="stat-row top-right">
       <div class="stat-item top-right-left">
-        <span class="stat-num" data-target="500">0</span><span class="stat-suffix">+</span>
+        <span class="stat-num" data-target="19">0</span><span class="stat-suffix">K</span>
         <span class="stat-label">Papers Sold</span>
       </div>
       <div class="stat-item top-right-right">
-        <span class="stat-num" data-target="42">0</span><span class="stat-suffix">K</span>
+        <span class="stat-num" data-target="36">0</span><span class="stat-suffix">K</span>
         <span class="stat-label">Clients Served</span>
       </div>
     </div>
-
     <div class="stat-item middle-left">
       <span class="stat-num" data-target="17">0</span>
       <span class="stat-label">Years Experience</span>
     </div>
-
     <div class="stat-item middle-center">
-      <span class="stat-num" data-target="250">0</span><span class="stat-suffix">K</span>
+      <span class="stat-num" data-target="192">0</span><span class="stat-suffix">K</span>
       <span class="stat-label">Revenue Generated</span>
     </div>
-
     <div class="stat-item bottom-right">
       <span class="stat-num" data-target="50">0</span><span class="stat-suffix">+</span>
       <span class="stat-label">Projects Delivered</span>
     </div>
   </div>
 </section>
-
+  </div>
   <script>
   const hero = document.getElementById("hero"),
     heroTitle = document.getElementById("heroTitle"),
@@ -519,23 +452,19 @@ body.dark .comfort-button:hover{
     counters = document.querySelectorAll(".stat-num"),
     toggle = document.getElementById("themeToggle"),
     icon = document.getElementById("themeIcon");
-
   const onScroll = () => {
     document.body.classList.toggle("scrolled", scrollY > 20);
     hero.style.setProperty("--hero-offset", `${scrollY * 0.3}px`);
     heroSubblock.style.transform = `translateY(${scrollY * 0.12}px)`;
     hero.classList.toggle("blur", scrollY > 40);
   };
-
   addEventListener("scroll", onScroll);
-
   const fadeObserver = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) {
       e.target.classList.add("visible");
       fadeObserver.unobserve(e.target);
     }
   }));
-
   const statsObserver = new IntersectionObserver(es => {
     if (!statsStarted && es.some(e => e.isIntersecting)) {
       statsStarted = true;
@@ -545,8 +474,8 @@ body.dark .comfort-button:hover{
           d = 1200,
           start = performance.now();
         const upd = n => {
-          const p = Math.min((n - start) / d, 1),
-            v = Math.floor(p * t);
+  const p = Math.min((n - start) / d, 1),
+    v = Math.floor((p * t) / 1) * 1;  // Jump by 4s
           c.textContent = v + (p === 1 ? s : "");
           if (p < 1) requestAnimationFrame(upd);
         };
@@ -554,22 +483,18 @@ body.dark .comfort-button:hover{
       });
     }
   }, { threshold: 0.5});
-
   document.querySelectorAll(".fade-appear").forEach(el => fadeObserver.observe(el));
   setTimeout(() => heroTitle.classList.add("visible"), 300);
   setTimeout(() => heroSubblock.classList.add("visible"), 600);
-
   let statsStarted = false;
   statsObserver.observe(document.querySelector(".stats-screen"));
-
   toggle.onclick = () => {
     document.body.classList.toggle("dark");
     icon.textContent = document.body.classList.contains("dark") ? "light_mode" : "dark_mode";
   };
-
   onScroll();
-</script>
 
+</script>
   <section class="section" id="connect">
     <div class="section-inner fade-appear">
       <h2 class="about-title">Connect</h2>
@@ -595,6 +520,7 @@ body.dark .comfort-button:hover{
       </div>
     </div>
   </section>
-
+  </style>
+</head>
 </body>
 </html>
