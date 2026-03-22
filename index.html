@@ -15,7 +15,7 @@
     @font-face{font-family:Clarkson;src:url("./fonts/clarkson-500.woff2") format("woff2");font-weight:500}
     :root{--bg:#fff;--text:#000;--accent:#1a73e8;--section-max-width:960px;--hero-offset:0px}
     body.dark{--bg:#111;--text:#fff;--accent:#7ab4ff}
-    html,body{height:100%;margin:0;scroll-snap-type:y mandatory;scroll-behavior:smooth;overscroll-behavior-y:none}
+html,body{height:100%;margin:0;padding:0;overflow-x:hidden;scroll-snap-type:y mandatory;scroll-snap-stop:always;scroll-behavior:smooth;overscroll-behavior-y:contain;touch-action:pan-y}
     body{font-family:Clarkson,sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;align-items:center;position:relative;transition:.4s}
     .section{min-height:100vh;width:100%;display:flex;justify-content:center;align-items:center;padding:60px 20px;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always}
     .section-inner{width:100%;max-width:var(--section-max-width)}
@@ -62,11 +62,204 @@
       transition:opacity 1.6s ease, transform 1.6s ease;
     }
 
+
     .hero-title.visible,
     .hero-subblock.visible{
       opacity:1;
       transform:translateY(0);
     }
+
+    .comfort-section{
+  position:relative;
+  background:var(--bg);
+  overflow:hidden;
+  padding:8vh 0;  /* Top/bottom margins */
+}
+
+.comfort-image-wrap{
+  position:absolute;
+  inset:8vh 0 8vh 0;  /* Respect top/bottom margins */
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  pointer-events:none;
+}
+
+.comfort-image{
+  max-width:min(55vw, 680px);
+  max-height:75vh;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  opacity:1;
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);  /* Thin line across bottom */
+  transition:clip-path 2.5s cubic-bezier(0.23, 1, 0.32, 1);
+  position:absolute;
+  bottom:8vh;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.comfort-section.visible .comfort-image{
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);  /* Full rectangle */
+}
+
+
+.comfort-text{
+  position:absolute;
+  left:5%;
+  bottom:12%;
+  width:min(22vw, 320px);
+  color:inherit;
+}
+
+.comfort-line {
+  opacity: 0;
+  transform: translateY(40px);  /* Hidden below "wall" */
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.comfort-section.visible .comfort-line:nth-child(1) { 
+  transition-delay: 0.2s; 
+}
+.comfort-section.visible .comfort-line:nth-child(2) { 
+  transition-delay: 0.4s; 
+}
+.comfort-section.visible .comfort-line:nth-child(3) { 
+  transition-delay: 0.6s; 
+}
+.comfort-section.visible .comfort-line:nth-child(4) { 
+  transition-delay: 0.8s; 
+}
+.comfort-section.visible .comfort-line:nth-child(5) { 
+  transition-delay: 1.0s; 
+}
+
+.comfort-section.visible .comfort-line {
+  opacity: 1;
+  transform: translateY(0);  /* Slide up from behind wall */
+}
+
+
+.comfort-copy{
+  position:absolute;
+  top:12%;  /* Adjusted for margin */
+  right:5%;
+  width:min(28vw, 420px);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  font-size:clamp(.85rem, 1vw, 1.05rem);
+  line-height:1.55;
+  text-align:left;
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity 1s ease, transform 1s ease;
+}
+
+body.dark .comfort-copy{
+  color:#fff;
+}
+
+.comfort-section.visible .comfort-copy{
+  opacity:1;
+  transform:translateY(0);
+}
+
+
+.comfort-line{
+  font-family:"Playfair Display", serif;
+  font-size:clamp(2.2rem, 3.8vw, 4.5rem);  /* Much bigger */
+  line-height:0.92;
+  letter-spacing:0.015em;
+  text-transform:uppercase;
+  font-weight:300;
+}
+
+.comfort-line.italic{
+  font-style:italic;
+}
+
+
+.comfort-line.italic{
+  font-style:italic;
+}
+
+.comfort-copy{
+  position:absolute;
+  top:2%;
+  right:5%;
+  width:min(28vw, 420px);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  font-size:clamp(.85rem, 1vw, 1.05rem);
+  line-height:1.55;
+  text-align:left;
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity 1s ease, transform 1s ease;
+}
+
+body.dark .comfort-copy{
+  color:#fff;
+}
+
+.comfort-section.visible .comfort-copy{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.comfort-button{
+  margin-top:18px;
+  padding:12px 28px;
+  border:none;
+  border-radius:32px;  /* Very rounded edges */
+  font-family:Arial,sans-serif;
+  font-size:clamp(.9rem, 1vw, 1.1rem);
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all .3s ease;
+  width:fit-content;
+}
+
+.comfort-button{
+  margin-top:14px;
+  padding:8px 20px;
+  border:none;
+  border-radius:24px;
+  font-family:Arial,sans-serif;
+  font-size:clamp(.7rem, .85vw, .9rem);  /* Much smaller */
+  font-weight:600;
+  letter-spacing:.02em;  /* Much tighter */
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all .3s ease;
+  width:fit-content;
+}
+
+/* Light mode: Black button, white text */
+.comfort-button{
+  background:#000;
+  color:#fff;
+}
+
+/* Dark mode: White button, black text */
+body.dark .comfort-button{
+  background:#fff;
+  color:#000;
+}
+
+.comfort-button:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 16px rgba(0,0,0,.2);
+}
+
+body.dark .comfort-button:hover{
+  box-shadow:0 4px 16px rgba(255,255,255,.15);
+}
+
+
 
     .hero-subtitle span{
       display:block;
@@ -118,6 +311,91 @@
       .hero-content{left:5%;right:5%;flex-direction:column;align-items:flex-start}
       .hero-subblock{max-width:none}
     }
+
+   .stats-screen{
+  background:#000;
+  color:#fff;
+  position:relative;
+}
+
+.stats-container{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:0;
+  box-sizing:border-box;
+}
+
+.stat-row {
+  display: flex;
+  gap: 6vw;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.stat-item{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity 1s ease, transform 1s ease;
+}
+
+.stats-screen.visible .stat-item{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.stat-num{
+  display:block;
+  font-family:"Playfair Display", serif;
+  font-weight:300;
+  font-size:clamp(4rem, 12vw, 18rem);
+  line-height:0.9;
+  letter-spacing:-0.02em;
+  margin-bottom:12px;  /* Space for captions */
+}
+
+.stat-label{
+  display:block;
+  font-family:Arial, sans-serif;
+  font-size:clamp(0.75rem, 1.1vw, 1.2rem);
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  opacity:0.7;
+}
+
+.top-right{ align-self: flex-end; }
+.top-right-left{ flex-shrink: 0; }
+.top-right-right{ flex-shrink: 0; }
+
+.middle-left{ 
+  align-self: flex-start; 
+  margin-left: 5vw;
+  margin-top: 8vh;
+}
+
+.middle-center{ 
+  align-self: center; 
+  margin-top: 10px;    /* Just 10px down from center */
+}
+
+
+.bottom-middle{ 
+  align-self: flex-start; 
+  margin-left: 25vw;
+  margin-bottom: 8vh;
+}
+
+.bottom-right { 
+  align-self: flex-end; 
+  margin-right: 5vw;
+  margin-bottom: 8vh;
+}
+
   </style>
 </head>
 <body>
@@ -152,78 +430,150 @@
     </div>
     <div class="scroll-indicator">scroll ↓</div>
   </section>
+  
+  <section class="section comfort-section fade-appear" id="comfort">
+    
+  <div class="comfort-image-wrap">
+    <img src="comfort.png" alt="Comfort" class="comfort-image">
+    <div class="comfort-copy">
+  <p>
+    Every element of Elyse Residence reflects<br>
+    a commitment to excellence. From the timeless<br>
+    elegance of its interiors to its thoughtfully<br>
+    curated amenities, the property embodies<br>
+    a holistic approach to luxury living.<br>
+    Whether you're seeking a serene retreat,<br>
+    cultural hub, or a space that fosters personal<br>
+    growth, Elyse Residence offers it all.
+  </p>
+  <button class="comfort-button">LEARN MORE</button>
+</div>
 
-  <section class="section">
-    <div class="section-inner content fade-appear">
-      <h1 id="hello-btn">Hello world</h1>
-      <p class="subtext">This uses Clarkson 400.</p>
+  </div>
+  
+
+  <div class="comfort-text">
+    <div class="comfort-line italic">TIMELESS</div>
+    <div class="comfort-line">DESIGN.</div>
+    <div class="comfort-line italic">WELLNESS-</div>
+    <div class="comfort-line">FOCUSED</div>
+    <div class="comfort-line">LIVING</div>
+  </div>
+</section>
+
+  <section class="section stats-screen fade-appear" id="stats">
+  <div class="stats-container">
+    <!-- Top-right: Papers Sold + Clients Served side-by-side -->
+    <div class="stat-row top-right">
+      <div class="stat-item top-right-left">
+        <span class="stat-num" data-target="500" data-suffix="+">0</span>
+        <span class="stat-label">Papers Sold</span>
+      </div>
+      <div class="stat-item top-right-right">
+        <span class="stat-num" data-target="42" data-suffix="K">0</span>
+        <span class="stat-label">Clients Served</span>
+      </div>
     </div>
-  </section>
 
-  <section class="section" id="about">
+    <!-- Middle-left: 17 Years Experience -->
+    <div class="stat-item middle-left">
+      <span class="stat-num" data-target="17">0</span>
+      <span class="stat-label">Years Experience</span>
+    </div>
+
+    <!-- Middle-center: 250K Revenue -->
+    <div class="stat-item middle-center">
+      <span class="stat-num" data-target="250" data-suffix="K">0</span>
+      <span class="stat-label">Revenue Generated</span>
+    </div>
+
+    <!-- Bottom-right: 50+ Projects Delivered -->
+  </div>
+</section>
+
+  <script>
+  const hero = document.getElementById("hero"),
+    heroTitle = document.getElementById("heroTitle"),
+    heroSubblock = document.querySelector(".hero-subblock"),
+    counters = document.querySelectorAll(".stat-num"),
+    toggle = document.getElementById("themeToggle"),
+    icon = document.getElementById("themeIcon");
+
+  const onScroll = () => {
+    document.body.classList.toggle("scrolled", scrollY > 20);
+    hero.style.setProperty("--hero-offset", `${scrollY * 0.3}px`);
+    heroSubblock.style.transform = `translateY(${scrollY * 0.12}px)`;
+    hero.classList.toggle("blur", scrollY > 40);
+  };
+
+  addEventListener("scroll", onScroll);
+
+  const fadeObserver = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add("visible");
+      fadeObserver.unobserve(e.target);
+    }
+  }));
+
+  const statsObserver = new IntersectionObserver(es => {
+    if (!statsStarted && es.some(e => e.isIntersecting)) {
+      statsStarted = true;
+      counters.forEach(c => {
+        const t = +c.dataset.target,
+          s = c.dataset.suffix || "",
+          d = 1200,
+          start = performance.now();
+        const upd = n => {
+          const p = Math.min((n - start) / d, 1),
+            v = Math.floor(p * t);
+          c.textContent = v + (p === 1 ? s : "");
+          if (p < 1) requestAnimationFrame(upd);
+        };
+        requestAnimationFrame(upd);
+      });
+    }
+  }, { threshold: 0.5});
+
+  document.querySelectorAll(".fade-appear").forEach(el => fadeObserver.observe(el));
+  setTimeout(() => heroTitle.classList.add("visible"), 300);
+  setTimeout(() => heroSubblock.classList.add("visible"), 600);
+
+  let statsStarted = false;
+  statsObserver.observe(document.querySelector(".stats-screen"));
+
+  toggle.onclick = () => {
+    document.body.classList.toggle("dark");
+    icon.textContent = document.body.classList.contains("dark") ? "light_mode" : "dark_mode";
+  };
+
+  onScroll();
+</script>
+
+  <section class="section" id="connect">
     <div class="section-inner fade-appear">
-      <h2 class="about-title">About Me</h2>
+      <h2 class="about-title">Connect</h2>
       <div class="about-layout">
         <div class="about-body">
-          <p class="about-lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel augue nec urna facilisis tincidunt.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae sapien non lorem tincidunt volutpat. Suspendisse potenti. Integer id lorem ac odio dictum placerat. Donec vel sem vel lacus finibus tincidunt. Vivamus non justo ac lorem efficivitur ultrices.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet massa vel justo tincidunt consequat. Cras id urna nec sapien feugiat gravida. Donec id lorem ac velit fermentum dictum.</p>
+          <p class="about-lead">You can add your email, socials, or a short contact message here.</p>
+          <p>For example, you could write something like: “Feel free to reach out for collaboration, investment opportunities, or general enquiries.”</p>
         </div>
         <div class="about-stats">
-          <div class="stat"><span class="stat-num" data-target="17">0</span><span class="stat-desc">Years Old</span></div>
-          <div class="stat"><span class="stat-num" data-target="100" data-suffix="+">0</span><span class="stat-desc">Hours of Market Research</span></div>
-          <div class="stat"><span class="stat-num" data-target="15" data-suffix="+">0</span><span class="stat-desc">Financial Models Built</span></div>
+          <div class="stat">
+            <span class="stat-num">Email</span>
+            <span class="stat-desc">yourname@example.com</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">Instagram</span>
+            <span class="stat-desc">@yourhandle</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">LinkedIn</span>
+            <span class="stat-desc">Your Name</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <script>
-    const hero=document.getElementById("hero"),
-      heroTitle=document.getElementById("heroTitle"),
-      heroSubblock=document.querySelector(".hero-subblock"),
-      counters=document.querySelectorAll(".stat-num"),
-      toggle=document.getElementById("themeToggle"),
-      icon=document.getElementById("themeIcon");
-
-    const onScroll=()=>{
-      document.body.classList.toggle("scrolled",scrollY>20);
-      hero.style.setProperty("--hero-offset",`${scrollY*0.3}px`);
-      heroSubblock.style.transform=`translateY(${scrollY*0.12}px)`;
-      hero.classList.toggle("blur",scrollY>40);
-    };
-
-    addEventListener("scroll",onScroll);
-
-    const fadeObserver=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&(e.target.classList.add("visible"),fadeObserver.unobserve(e.target)))),
-      statsObserver=new IntersectionObserver(es=>{
-        if(!statsStarted&&es.some(e=>e.isIntersecting)){
-          statsStarted=true;
-          counters.forEach(c=>{
-            const t=+c.dataset.target,s=c.dataset.suffix||"",d=1200,start=performance.now();
-            const upd=n=>{
-              const p=Math.min((n-start)/d,1),v=Math.floor(p*t);
-              c.textContent=v+(p===1?s:"");
-              if(p<1)requestAnimationFrame(upd);
-            };
-            requestAnimationFrame(upd);
-          });
-        }
-      });
-
-    document.querySelectorAll(".fade-appear").forEach(el=>fadeObserver.observe(el));
-    setTimeout(()=>heroTitle.classList.add("visible"),300);
-    setTimeout(()=>heroSubblock.classList.add("visible"),600);
-
-    let statsStarted=false;
-    statsObserver.observe(document.querySelector(".about-stats"));
-
-    toggle.onclick=()=>{
-      document.body.classList.toggle("dark");
-      icon.textContent=document.body.classList.contains("dark")?"light_mode":"dark_mode";
-    };
-
-    onScroll();
-  </script>
 </body>
 </html>
