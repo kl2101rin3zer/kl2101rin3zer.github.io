@@ -1,102 +1,411 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light" class="h-full bg-white text-gray-900">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Name</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name</title>
 
-    <!-- Google Fonts (place them here) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+  <!-- Google Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-    </style>
-    <style>
-  @font-face {
-    font-family: "Clarkson";
-    src: url("./fonts/clarkson-400.woff2") format("woff2");
-    font-weight: 400;
-    font-style: normal;
-  }
+  <!-- Google Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  @font-face {
-    font-family: "Clarkson";
-    src: url("./fonts/clarkson-500.woff2") format("woff2");
-    font-weight: 500;
-    font-style: normal;
-  }
+  <style>
+    @font-face {
+      font-family: "Clarkson";
+      src: url("./fonts/clarkson-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+    }
 
-  body {
-    font-family: "Clarkson", sans-serif;
-  }
-</style>
+    @font-face {
+      font-family: "Clarkson";
+      src: url("./fonts/clarkson-500.woff2") format("woff2");
+      font-weight: 500;
+      font-style: normal;
+    }
 
+    :root {
+      --bg-light: #ffffff;
+      --bg-dark: #111111;
+      --text-light: #000000;
+      --text-dark: #ffffff;
+      --accent-light: #1a73e8;
+      --accent-dark: #7ab4ff;
+      --section-max-width: 960px;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+      overscroll-behavior-y: contain;
+    }
+
+    body {
+      font-family: "Clarkson", sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    /* Scroll-snap sections */
+    .section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .section-inner {
+      width: 100%;
+      max-width: var(--section-max-width);
+    }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 32px;
+      color: inherit;
+      z-index: 999;
+      transition: color 0.4s ease, transform 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+    }
+
+    /* Fullscreen background hero */
+    .hero-bg {
+      background-image: url("london.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: saturate(60%) brightness(85%);
+      transition: filter 0.4s ease, transform 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Parallax layer */
+    .hero-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: inherit;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -1;
+      transform: translateY(0);
+      transition: transform 0.1s linear;
+      filter: inherit;
+    }
+
+    .hero-bg.blur {
+      filter: saturate(40%) brightness(70%) blur(6px);
+      transform: scale(1.03);
+    }
+
+    /* Hero title */
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+      color: white;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .hero-title.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1rem;
+      color: white;
+      opacity: 0.8;
+      animation: bounce 1.6s infinite ease-in-out;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, 8px); }
+    }
+
+    /* Intro content */
+    .content {
+      text-align: center;
+    }
+
+    #hello-btn {
+      color: var(--accent-light);
+      cursor: pointer;
+      font-weight: 400;
+      margin: 0 0 8px;
+      font-size: 2.5rem;
+      transition: color 0.4s ease;
+    }
+
+    body.dark #hello-btn {
+      color: var(--accent-dark);
+    }
+
+    .subtext {
+      margin: 0;
+      font-weight: 400;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    /* Fade-appear utility */
+    .fade-appear {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-appear.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* About section */
+    .about-title {
+      font-size: 2rem;
+      margin-bottom: 24px;
+    }
+
+    .about-layout {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .about-body {
+      flex: 2;
+      min-width: 260px;
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    .about-stats {
+      flex: 1;
+      min-width: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .stat {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    body.dark .stat {
+      border-bottom-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .stat-desc {
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 768px) {
+      .section {
+        padding: 40px 16px;
+      }
+
+      #hello-btn {
+        font-size: 2rem;
+      }
+
+      .about-layout {
+        flex-direction: column;
+      }
+
+      .hero-title {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
 </head>
 
+<body>
+
+  <!-- Theme toggle button -->
+  <button class="theme-toggle" id="themeToggle">
+    <span class="material-icons" id="themeIcon">dark_mode</span>
+  </button>
+
+  <!-- Section 1: Fullscreen background image -->
+  <section class="section hero-bg fade-appear" id="hero">
+    <h1 class="hero-title" id="heroTitle">Welcome</h1>
+    <div class="scroll-indicator">scroll ↓</div>
+  </section>
+
+  <!-- Section 2: Intro text -->
+  <section class="section">
+    <div class="section-inner content fade-appear">
+      <h1 id="hello-btn">Hello world</h1>
+      <p class="subtext">This uses Clarkson 400.</p>
+    </div>
+  </section>
+
+  <!-- Section 3: About -->
+  <section class="section" id="about">
+    <div class="section-inner fade-appear">
+      <h2 class="about-title">About Me</h2>
+      <div class="about-layout">
+        <div class="about-body">
+          <p class="about-lead">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel augue nec urna facilisis tincidunt.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae sapien non lorem tincidunt volutpat.
+            Suspendisse potenti. Integer id lorem ac odio dictum placerat. Donec vel sem vel lacus finibus tincidunt.
+            Vivamus non justo ac lorem efficitur ultrices.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet massa vel justo tincidunt
+            consequat. Cras id urna nec sapien feugiat gravida. Donec id lorem ac velit fermentum dictum.
+          </p>
+        </div>
+
+        <div class="about-stats">
+          <div class="stat">
+            <span class="stat-num" data-target="17">0</span>
+            <span class="stat-desc">Years Old</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num" data-target="100" data-suffix="+">0</span>
+            <span class="stat-desc">Hours of Market Research</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num" data-target="15" data-suffix="+">0</span>
+            <span class="stat-desc">Financial Models Built</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Fade-appear observer
+    const fadeObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    });
+
+    document.querySelectorAll(".fade-appear").forEach(el => fadeObserver.observe(el));
+
+    // Hero title fade-in
+    const heroTitle = document.getElementById("heroTitle");
+    setTimeout(() => heroTitle.classList.add("visible"), 300);
+
+    // Parallax effect
+    const hero = document.getElementById("hero");
+    window.addEventListener("scroll", () => {
+      const offset = window.scrollY * 0.3;
+      hero.style.setProperty("--parallax-offset", `${offset}px`);
+      hero.querySelector("::before");
+    });
+
+    // Blur hero background on scroll
+    window.addEventListener("scroll", () => {
+      const scrollY = window.scrollY;
+      if (scrollY > 40) hero.classList.add("blur");
+      else hero.classList.remove("blur");
+    });
+
+    // Animated counters
+    const counters = document.querySelectorAll(".stat-num");
+    let statsStarted = false;
+
+    const statsObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !statsStarted) {
+          statsStarted = true;
+
+          counters.forEach(counter => {
+            const target = +counter.getAttribute("data-target");
+            const suffix = counter.getAttribute("data-suffix") || "";
+            const duration = 1200;
+            const startTime = performance.now();
+
+            const update = (now) => {
+              const progress = Math.min((now - startTime) / duration, 1);
+              const value = Math.floor(progress * target);
+              counter.textContent = value + (progress === 1 ? suffix : "");
+
+              if (progress < 1) requestAnimationFrame(update);
+            };
+
+            requestAnimationFrame(update);
+          });
+        }
+      });
+    });
+
+    const statsSection = document.querySelector(".about-stats");
+    if (statsSection) statsObserver.observe(statsSection);
+
+    // Dark mode toggle
+    const toggle = document.getElementById("themeToggle");
+    const icon = document.getElementById("themeIcon");
+
+    toggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      icon.textContent = document.body.classList.contains("dark")
+        ? "light_mode"
+        : "dark_mode";
+    });
+  </script>
+
+</body>
 </html>
-
-<style>
-  body {
-    height: 100vh;                 /* full screen height */
-    margin: 0;
-    display: flex;
-    justify-content: center;       /* horizontal center */
-    align-items: center;           /* vertical center */
-    font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-</style>
-
-<h1 id="hello-btn" style="font-weight: 400;">Hello world</h1>
-
-<style>
-  #hello-btn {
-    color: blue;
-    cursor: pointer;
-    text-align: center;
-    margin: 0;
-  }
-
-  body {
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-</style>
-
-<style>
-  body {
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-
-    background-image: url("");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-  #hello-btn {
-    color: blue;
-    cursor: pointer;
-    text-align: center;
-    margin: 0;
-  }
-</style>
-
-<!-- const randomImage = images[Math.floor(Math.random() * images.length)]; -->
-
-<script>
-src: url("./clarkson-400.woff2") format("woff2");
-</script>
-<p style="font-weight: 400;"><br>This uses Clarkson 400.</br></p>
