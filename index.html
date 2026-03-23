@@ -8,361 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&family=Playfair+Display:wght@300;400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <style>
-    @font-face{font-family:Clarkson;src:url("./fonts/clarkson-400.woff2") format("woff2");font-weight:400}
-    @font-face{font-family:Clarkson;src:url("./fonts/clarkson-500.woff2") format("woff2");font-weight:500}
-    :root{--bg:#fff;--text:#000;--accent:#1a73e8;--section-max-width:960px;--hero-offset:0px}
-    body.dark{--bg:#111;--text:#fff;--accent:#7ab4ff}
-html,body{height:100%;margin:0;padding:0;overflow-x:hidden;scroll-snap-type:y mandatory;scroll-snap-stop:always;scroll-behavior:smooth;overscroll-behavior-y:contain;touch-action:pan-y}
-    body{font-family:Clarkson,sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;align-items:center;position:relative;transition:.4s}
-    .section{min-height:100vh;width:100%;display:flex;justify-content:center;align-items:center;padding:60px 20px;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always}
-    .section-inner{width:100%;max-width:var(--section-max-width)}
-    .fade-appear{opacity:0;transform:translateY(20px);transition:.8s}
-    .fade-appear.visible{opacity:1;transform:none}
-    .theme-toggle{position:fixed;bottom:20px;right:20px;background:none;border:0;cursor:pointer;font-size:32px;color:inherit;z-index:999}
-    .hero-bg{background:url("london.jpg") center/cover no-repeat;filter:saturate(45%) brightness(82%);position:relative;overflow:hidden}
-    .hero-bg::before{content:"";position:absolute;inset:0;background:inherit;background-size:cover;background-position:center;transform:translateY(var(--hero-offset));transition:transform .1s linear;filter:inherit;z-index:-1}
-    .hero-content{
-      position:absolute;
-      left:5%;
-      right:6%;
-      bottom:10%;
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap:24px;
-    }
-    .hero-title{
-      position:static;
-      margin:0;
-      font-family:"Playfair Display",serif;
-      font-weight:300;
-      font-size:14vw;
-      line-height:.9;
-      letter-spacing:-.015em;
-      color:#fff;
-      text-shadow:0 4px 18px rgba(0,0,0,.35);
-      pointer-events:none;
-      opacity:0;
-      transform:translateY(4px);
-      transition:opacity 1.2s ease, transform 1.2s ease;
-    }
-    .hero-subblock{
-      position:static;
-      max-width:28%;
-      text-align:left;
-      pointer-events:none;
-      opacity:0;
-      transform:translateY(-12px);
-      transition:opacity 1.6s ease, transform 1.6s ease;
-    }
-    .hero-title.visible,
-    .hero-subblock.visible{
-      opacity:1;
-      transform:translateY(0);
-    }
-    .comfort-section{
-  position:relative;
-  background:var(--bg);
-  overflow:hidden;
-  padding:8vh 0;  /* Top/bottom margins */
-}
-.comfort-image-wrap{
-  position:absolute;
-  inset:8vh 0 8vh 0;  /* Respect top/bottom margins */
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  pointer-events:none;
-}
-.comfort-image{
-  max-width:min(55vw, 680px);
-  max-height:75vh;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  opacity:1;
-  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);  /* Thin line across bottom */
-  transition:clip-path 2.5s cubic-bezier(0.23, 1, 0.32, 1);
-  position:absolute;
-  bottom:8vh;
-  left:50%;
-  transform:translateX(-50%);
-}
-.comfort-section.visible .comfort-image{
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);  /* Full rectangle */
-}
-.comfort-text{
-  position:absolute;
-  left:5%;
-  bottom:12%;
-  width:min(22vw, 320px);
-  color:inherit;
-}
-.comfort-line {
-  opacity: 0;
-  transform: translateY(40px);  /* Hidden below "wall" */
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.comfort-section.visible .comfort-line:nth-child(1) { 
-  transition-delay: 0.2s; 
-}
-.comfort-section.visible .comfort-line:nth-child(2) { 
-  transition-delay: 0.4s; 
-}
-.comfort-section.visible .comfort-line:nth-child(3) { 
-  transition-delay: 0.6s; 
-}
-.comfort-section.visible .comfort-line:nth-child(4) { 
-  transition-delay: 0.8s; 
-}
-.comfort-section.visible .comfort-line:nth-child(5) { 
-  transition-delay: 1.0s; 
-}
-.comfort-section.visible .comfort-line {
-  opacity: 1;
-  transform: translateY(0);  /* Slide up from behind wall */
-}
-.comfort-copy{
-  position:absolute;
-  top:12%;  /* Adjusted for margin */
-  right:5%;
-  width:min(28vw, 420px);
-  color:var(--text);
-  font-family:Arial,sans-serif;
-  font-size:clamp(.85rem, 1vw, 1.05rem);
-  line-height:1.55;
-  text-align:left;
-  opacity:0;
-  transform:translateY(18px);
-  transition:opacity 1s ease, transform 1s ease;
-}
-body.dark .comfort-copy{
-  color:#fff;
-}
-.comfort-section.visible .comfort-copy{
-  opacity:1;
-  transform:translateY(0);
-}
-.comfort-line{
-  font-family:"Playfair Display", serif;
-  font-size:clamp(2.2rem, 3.8vw, 4.5rem);  /* Much bigger */
-  line-height:0.92;
-  letter-spacing:0.015em;
-  text-transform:uppercase;
-  font-weight:300;
-}
-.comfort-line.italic{
-  font-style:italic;
-}
-.comfort-line.italic{
-  font-style:italic;
-}
-.comfort-copy{
-  position:absolute;
-  top:2%;
-  right:5%;
-  width:min(28vw, 420px);
-  color:var(--text);
-  font-family:Arial,sans-serif;
-  font-size:clamp(.85rem, 1vw, 1.05rem);
-  line-height:1.55;
-  text-align:left;
-  opacity:0;
-  transform:translateY(18px);
-  transition:opacity 1s ease, transform 1s ease;
-}
-body.dark .comfort-copy{
-  color:#fff;
-}
-.comfort-section.visible .comfort-copy{
-  opacity:1;
-  transform:translateY(0);
-}
-.comfort-button{
-  margin-top:18px;
-  padding:12px 28px;
-  border:none;
-  border-radius:32px;  /* Very rounded edges */
-  font-family:Arial,sans-serif;
-  font-size:clamp(.9rem, 1vw, 1.1rem);
-  font-weight:600;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:all .3s ease;
-  width:fit-content;
-}
-.comfort-button{
-  margin-top:14px;
-  padding:8px 20px;
-  border:none;
-  border-radius:24px;
-  font-family:Arial,sans-serif;
-  font-size:clamp(.7rem, .85vw, .9rem);  /* Much smaller */
-  font-weight:600;
-  letter-spacing:.02em;  /* Much tighter */
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:all .3s ease;
-  width:fit-content;
-}
-/* Light mode: Black button, white text */
-.comfort-button{
-  background:#000;
-  color:#fff;
-}
-/* Dark mode: White button, black text */
-body.dark .comfort-button{
-  background:#fff;
-  color:#000;
-}
-.comfort-button:hover{
-  transform:translateY(-1px);
-  box-shadow:0 4px 16px rgba(0,0,0,.2);
-}
-body.dark .comfort-button:hover{
-  box-shadow:0 4px 16px rgba(255,255,255,.15);
-}
-    .hero-subtitle span{
-      display:block;
-      font-family:"Playfair Display",serif;
-      font-weight:300;
-      font-style:italic;
-      font-size:2vw;
-      letter-spacing:.02em;
-      color:#fff;
-      text-shadow:0 3px 12px rgba(0,0,0,.35)
-    }
-    .hero-subtext{
-      font-family:Arial,sans-serif;
-      font-size:1.05vw;
-      line-height:1.55;
-      color:rgba(255,255,255,.92);
-      margin-top:14px;
-      max-width:22vw
-    }
-    .scroll-indicator{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-size:1rem;color:#fff;opacity:.8;animation:bounce 1.6s infinite ease-in-out;text-shadow:0 2px 10px rgba(0,0,0,.4)}
-    @keyframes bounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
-    .content{text-align:center}
-    #hello-btn{color:var(--accent);cursor:pointer;font-weight:400;margin:0 0 8px;font-size:2.5rem}
-    .subtext{margin:0;font-size:1rem;opacity:.9}
-    .about-title{font-size:2rem;margin-bottom:24px}
-    .about-layout{display:flex;gap:40px;flex-wrap:wrap}
-    .about-body{flex:2;min-width:260px;line-height:1.6;font-size:.98rem}
-    .about-stats{flex:1;min-width:220px;display:flex;flex-direction:column;gap:20px}
-    .stat{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.08)}
-    body.dark .stat{border-bottom-color:rgba(255,255,255,.12)}
-    .stat-num{font-size:2rem;font-weight:700;display:block;margin-bottom:4px}
-    .stat-desc{font-size:.9rem;opacity:.85}
-    .nav{position:fixed;top:0;left:0;width:100%;padding:22px 40px;display:flex;justify-content:center;z-index:9999;pointer-events:none}
-    .nav-inner{width:100%;max-width:var(--section-max-width);display:flex;justify-content:space-between;align-items:center;pointer-events:auto}
-    .nav-logo,.nav-links a{font-family:"Playfair Display",serif;color:#fff}
-    .nav-logo{font-size:1.4rem;font-weight:300;letter-spacing:.02em}
-    .nav-links a{margin-left:28px;font-size:.95rem;text-decoration:none;opacity:.85;transition:.25s}
-    .nav-links a:hover{opacity:1}
-    body.scrolled .nav{opacity:.75}
-    @media (max-width:768px){
-      .section{padding:40px 16px}
-      #hello-btn{font-size:2rem}
-      .about-layout{flex-direction:column}
-      .hero-title{font-size:2.2rem}
-      .hero-subtitle span{font-size:1.1rem}
-      .hero-subtext{font-size:.9rem;max-width:none}
-      .hero-content{left:5%;right:5%;flex-direction:column;align-items:flex-start}
-      .hero-subblock{max-width:none}
-    }
-   .stats-screen{
-  background:#000;
-  color:#fff;
-  position:relative;
-}
-.stats-container{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  padding:0;
-  box-sizing:border-box;
-}
-.stat-row {
-  display: flex;
-  gap: 6vw;
-  align-items: flex-end;
-  justify-content: flex-end;
-  width: 100%;
-}
-.stat-item{
-  opacity:0;
-  transform:translateY(30px);
-  transition:opacity 1s ease, transform 1s ease;
-}
-.stats-screen.visible .stat-item{
-  opacity:1;
-  transform:translateY(0);
-}
-.stat-num{
-  display:inline-block;  /* Changed from block */
-  font-family:"Playfair Display", serif;
-  font-weight:300;
-  font-size:clamp(4rem, 12vw, 18rem);
-  line-height:0.9;
-  letter-spacing:-0.02em;
-}
-.stat-suffix{
-  display:inline-block;
-  font-family:Playfair-display, serif;
-  font-size:clamp(3rem, 2.4vw, 3rem);  /* Much bigger */
-  letter-spacing:0.005em;
-  text-transform:uppercase;
-  opacity:0.7;  /* Exact same opacity as caption */
-  vertical-align: bottom;
-  margin-left:0.4em;  /* More spacing for bigger size */
-  font-weight:400;  /* No bold */
-}
-.stat-label{
-  display:block;
-  font-family:Arial, sans-serif;
-  font-size:clamp(0.75rem, 1.1vw, 1.2rem);
-  letter-spacing:0.05em;
-  text-transform:uppercase;
-  opacity:0.7;
-  margin-top:12px;  /* Space after number+suffix */
-}
-.stat-label{
-  display:block;
-  font-family:Arial, sans-serif;
-  font-size:clamp(0.75rem, 1.1vw, 1.2rem);
-  letter-spacing:0.05em;
-  text-transform:uppercase;
-  opacity:0.7;
-}
-.top-right{ align-self: flex-end; }
-.top-right-left{ flex-shrink: 0; }
-.top-right-right{ flex-shrink: 0; }
-.middle-left{ 
-  align-self: flex-start; 
-  margin-left: 5vw;
-  margin-top: 8vh;
-}
-.middle-center{ 
-  align-self: center; 
-  margin-top: 10px;    /* Just 10px down from center */
-}
-.bottom-middle{ 
-  align-self: flex-start; 
-  margin-left: 25vw;
-  margin-bottom: 8vh;
-}
-.bottom-right { 
-  align-self: flex-end; 
-  margin-right: 5vw;
-  margin-bottom: 8vh;
-}
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <nav class="nav">
@@ -375,9 +21,11 @@ body.dark .comfort-button:hover{
       </div>
     </div>
   </nav>
+  
   <button class="theme-toggle" id="themeToggle">
     <span class="material-icons" id="themeIcon">dark_mode</span>
   </button>
+
   <section class="section hero-bg fade-appear" id="hero">
     <div class="hero-content">
       <h1 class="hero-title" id="heroTitle">HELLO</h1>
@@ -393,115 +41,67 @@ body.dark .comfort-button:hover{
     </div>
     <div class="scroll-indicator">scroll ↓</div>
   </section>
-  <section class="section comfort-section fade-appear" id="comfort">
-  <div class="comfort-image-wrap">
-    <img src="comfort.png" alt="Comfort" class="comfort-image">
-    <div class="comfort-copy">
-  <p>
-    Every element of Elyse Residence reflects<br>
-    a commitment to excellence. From the timeless<br>
-    elegance of its interiors to its thoughtfully<br>
-    curated amenities, the property embodies<br>
-    a holistic approach to luxury living.<br>
-    Whether you're seeking a serene retreat,<br>
-    cultural hub, or a space that fosters personal<br>
-    growth, Elyse Residence offers it all.
-  </p>
-  <button class="comfort-button">LEARN MORE</button>
-</div>
-  </div>
-  <div class="comfort-text">
-    <div class="comfort-line italic">TIMELESS</div>
-    <div class="comfort-line">DESIGN.</div>
-    <div class="comfort-line italic">WELLNESS-</div>
-    <div class="comfort-line">FOCUSED</div>
-    <div class="comfort-line">LIVING</div>
-  </div>
-</section>
-  <section class="section stats-screen fade-appear" id="stats">
-  <div class="stats-container">
-    <div class="stat-row top-right">
-      <div class="stat-item top-right-left">
-        <span class="stat-num" data-target="19">0</span><span class="stat-suffix">K</span>
-        <span class="stat-label">Papers Sold</span>
-      </div>
-      <div class="stat-item top-right-right">
-        <span class="stat-num" data-target="36">0</span><span class="stat-suffix">K</span>
-        <span class="stat-label">Clients Served</span>
-      </div>
-    </div>
-    <div class="stat-item middle-left">
-      <span class="stat-num" data-target="17">0</span>
-      <span class="stat-label">Years Experience</span>
-    </div>
-    <div class="stat-item middle-center">
-      <span class="stat-num" data-target="192">0</span><span class="stat-suffix">K</span>
-      <span class="stat-label">Revenue Generated</span>
-    </div>
-    <div class="stat-item bottom-right">
-      <span class="stat-num" data-target="50">0</span><span class="stat-suffix">+</span>
-      <span class="stat-label">Projects Delivered</span>
-    </div>
-  </div>
-</section>
-  </div>
-  <script>
-  const hero = document.getElementById("hero"),
-    heroTitle = document.getElementById("heroTitle"),
-    heroSubblock = document.querySelector(".hero-subblock"),
-    counters = document.querySelectorAll(".stat-num"),
-    toggle = document.getElementById("themeToggle"),
-    icon = document.getElementById("themeIcon");
-  const onScroll = () => {
-    document.body.classList.toggle("scrolled", scrollY > 20);
-    hero.style.setProperty("--hero-offset", `${scrollY * 0.3}px`);
-    heroSubblock.style.transform = `translateY(${scrollY * 0.12}px)`;
-    hero.classList.toggle("blur", scrollY > 40);
-  };
-  addEventListener("scroll", onScroll);
-  const fadeObserver = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add("visible");
-      fadeObserver.unobserve(e.target);
-    }
-  }));
-  const statsObserver = new IntersectionObserver(es => {
-    if (!statsStarted && es.some(e => e.isIntersecting)) {
-      statsStarted = true;
-      counters.forEach(c => {
-        const t = +c.dataset.target,
-          s = c.dataset.suffix || "",
-          d = 1200,
-          start = performance.now();
-        const upd = n => {
-  const p = Math.min((n - start) / d, 1),
-    v = Math.floor((p * t) / 1) * 1;  // Jump by 4s
-          c.textContent = v + (p === 1 ? s : "");
-          if (p < 1) requestAnimationFrame(upd);
-        };
-        requestAnimationFrame(upd);
-      });
-    }
-  }, { threshold: 0.5});
-  document.querySelectorAll(".fade-appear").forEach(el => fadeObserver.observe(el));
-  setTimeout(() => heroTitle.classList.add("visible"), 300);
-  setTimeout(() => heroSubblock.classList.add("visible"), 600);
-  let statsStarted = false;
-  statsObserver.observe(document.querySelector(".stats-screen"));
-  toggle.onclick = () => {
-    document.body.classList.toggle("dark");
-    icon.textContent = document.body.classList.contains("dark") ? "light_mode" : "dark_mode";
-  };
-  onScroll();
 
-</script>
+  <section class="section comfort-section fade-appear" id="comfort">
+    <div class="comfort-image-wrap">
+      <img src="images/comfort.png" alt="Comfort" class="comfort-image">
+      <div class="comfort-copy">
+        <p>
+          Every element of Elyse Residence reflects<br>
+          a commitment to excellence. From the timeless<br>
+          elegance of its interiors to its thoughtfully<br>
+          curated amenities, the property embodies<br>
+          a holistic approach to luxury living.<br>
+          Whether you're seeking a serene retreat,<br>
+          cultural hub, or a space that fosters personal<br>
+          growth, Elyse Residence offers it all.
+        </p>
+        <button class="comfort-button">LEARN MORE</button>
+      </div>
+    </div>
+    <div class="comfort-text">
+      <div class="comfort-line italic">TIMELESS</div>
+      <div class="comfort-line">DESIGN.</div>
+      <div class="comfort-line italic">WELLNESS-</div>
+      <div class="comfort-line">FOCUSED</div>
+      <div class="comfort-line">LIVING</div>
+    </div>
+  </section>
+
+  <section class="section stats-screen fade-appear" id="stats">
+    <div class="stats-container">
+      <div class="stat-row top-right">
+        <div class="stat-item top-right-left">
+          <span class="stat-num" data-target="19">0</span><span class="stat-suffix">K</span>
+          <span class="stat-label">Papers Sold</span>
+        </div>
+        <div class="stat-item top-right-right">
+          <span class="stat-num" data-target="36">0</span><span class="stat-suffix">K</span>
+          <span class="stat-label">Clients Served</span>
+        </div>
+      </div>
+      <div class="stat-item middle-left">
+        <span class="stat-num" data-target="17">0</span>
+        <span class="stat-label">Years Experience</span>
+      </div>
+      <div class="stat-item middle-center">
+        <span class="stat-num" data-target="192">0</span><span class="stat-suffix">K</span>
+        <span class="stat-label">Revenue Generated</span>
+      </div>
+      <div class="stat-item bottom-middle">
+        <span class="stat-num" data-target="50">0</span><span class="stat-suffix">+</span>
+        <span class="stat-label">Projects Delivered</span>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="connect">
     <div class="section-inner fade-appear">
       <h2 class="about-title">Connect</h2>
       <div class="about-layout">
         <div class="about-body">
           <p class="about-lead">You can add your email, socials, or a short contact message here.</p>
-          <p>For example, you could write something like: “Feel free to reach out for collaboration, investment opportunities, or general enquiries.”</p>
+          <p>For example, you could write something like: "Feel free to reach out for collaboration, investment opportunities, or general enquiries."</p>
         </div>
         <div class="about-stats">
           <div class="stat">
@@ -520,7 +120,7 @@ body.dark .comfort-button:hover{
       </div>
     </div>
   </section>
-  </style>
-</head>
+
+  <script src="script.js"></script>
 </body>
 </html>

@@ -25,6 +25,7 @@
 </section>
 
 <!--STYLE********************************************************************-->
+<style>
 .lumieres-section {
   background: #000;
   color: #fff;
@@ -109,8 +110,10 @@ left: 1rem;
 carousel-button.next {
 right: 1rem;
 }
+</style>
 
 <!--SCRIPT***************************************************-->
+<script>
 const buttons = document.querySelectorAll("[data-carousel-button]")
 buttons.forEach(button => {
   button.addEventListener("click", () => {
@@ -127,3 +130,4 @@ buttons.forEach(button => {
   })
 })
 
+</script>
